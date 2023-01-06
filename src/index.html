@@ -8,10 +8,6 @@
     <link href="/src/main.css" rel="stylesheet" />
     <link href="main.css" rel="stylesheet" />
 
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=sans"
-    />
     <script
       src="https://kit.fontawesome.com/de01e3e79c.js"
       crossorigin="anonymous"
@@ -23,46 +19,56 @@
       }
     </style>
   </head>
-  <body class="p-14 flex justify-center flex-col">
-    <div class="sticky top-0 z-20 bg-white">
-      <header>
-        <h1 class="text-3xl mb-[50px]">ToDo List Demo App</h1>
-      </header>
-      <section id="Add-Task" class="flex flex-row-reverse mb-6 max-h-[42px]">
-        <form id="input-task-form">
-          <select
-            class="h-[100%] mr-2 cursor-pointer border-2 border-black rounded-md"
-            name="status"
-            id="status"
+  <body
+    style="display: flex; align-items: center; justify-content: center"
+    class="p-14 flex-col items-center min-w-fit"
+    id="body"
+  >
+    <div class="w-[80%]">
+      <div class="sticky top-0 z-20 bg-white ]">
+        <header class="]">
+          <h1 class="text-4xl mb-[50px] font-extrabold">ToDo List Demo App</h1>
+        </header>
+        <section id="Add-Task" class="flex flex-row-reverse mb-6">
+          <form
+            id="input-task-form"
+            class="flex flex-wrap items-end justify-end space-y-2 space-x-2"
           >
-            <option value="Todo">Todo</option>
-            <option value="Pending">Pending</option>
-            <option value="Complete">Complete</option>
-          </select>
-          <input
-            required
-            id="input"
-            class="mr-3 h-[100%] pl-3 min-w-[100px] border-2 border-black rounded-md"
-            placeholder="Add Task"
-          />
-          <button
-            id="submit-button"
-            class="border-2 border-blue-800 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded active:opacity-40"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </section>
+            <select
+              class="h-[40px] cursor-pointer border-2 border-[#0dcaf0] rounded-md text-[#0dcaf0] font-bold"
+              name="status"
+              id="status"
+            >
+              <option value="Todo">Todo</option>
+              <option value="Pending">Pending</option>
+              <option value="Complete">Complete</option>
+            </select>
 
-      <div class="table-con">
-        <div class="table-content">#</div>
-        <div class="table-content r">Task Name</div>
-        <div class="table-content">Status</div>
-        <div class="table-content">Edit</div>
-        <div class="table-content">Remove</div>
+            <input
+              required
+              id="input"
+              class="h-[40px] pl-3 border-2 border-[#0dcaf0] rounded-md"
+              placeholder="Add Task"
+            />
+            <button
+              id="submit-button"
+              class="border-2 h-[40px] w-[95px] border-[#0dcaf0] text-[#0dcaf0] hover:bg-[#0dcaf0] hover:text-white font-bold py-2 px-4 rounded active:opacity-40"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        </section>
+
+        <div class="header border-b-4 border-black mb-4">
+          <div class="items h">#</div>
+          <div class="items h r">Task Name</div>
+          <div class="items h">Status</div>
+          <div class="items h">Edit</div>
+          <div class="items h">Remove</div>
+        </div>
       </div>
+      <table id="Table" class="w-[100%]"></table>
     </div>
-    <table id="Table" class="w-[100%]"></table>
   </body>
 </html>

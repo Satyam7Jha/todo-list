@@ -1,72 +1,21 @@
-.table-con{
-    width: 100%;
-    border-bottom: 2px solid black;
-    margin-top: 30px;
+.header{
     display: flex;
     flex-direction: row;
-    height: 50px;
-    font-weight: bold;
-
+    font-weight: bolder;
 }
-.table-content{
+
+
+.items{
     display: flex;
-    flex:1;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    flex:1
 }
-
-.row{
-  
-        width: 100%;
-        border-bottom: 1px solid gray;
-        margin-top: 30px;
-        display: flex;
-        flex-direction: row;
-        height: 50px;
-   
+.h{
+    font-weight: bolder;
+    font-size: 18px;
 }
-
-.status-{
-    border:2px solid gray;
-    border-radius: 5px;
-    padding: 3px;
-    padding-right: 5px;
-    padding-left: 5px;
-}
-
 .r{
     flex:2
-}
-.Icon{
-    cursor: pointer;
-    font-size: 20px;
-
-}
-.edit{
-    color:blueviolet;
-    font-size: 25px;
-}
-.delete{
-    color:gray
-}
-.Icon:hover{
-    color:blue
-}
-.Icon:active{
-    color:black
-}
-
-.todo{
-    border:2px solid gray;
-    color: gray;
-
-    
-}
-.pending{
-    background-color: yellow;
-    color: black;
-}
-.complete{
-    border: 2px solid green;
-    color:green
 }

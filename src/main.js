@@ -1,160 +1,176 @@
 window.addEventListener("load", () => {
-  const form = document.getElementById("input-task-form");
-  const input = document.getElementById("input");
-  const button = document.getElementById("submit-button");
-  const table = document.getElementById("Table");
+  const FORM = document.getElementById("input-task-form");
+  const INPUT = document.getElementById("input");
+  const BUTTON = document.getElementById("submit-button");
+  const TABLE = document.getElementById("Table");
 
-  const getList = () => {
-    console.log("hii", localStorage.getItem("todo"));
-    if (localStorage.getItem("todo") === null) {
-      return [];
-    }
-    console.log(JSON.parse(localStorage.getItem("todo")), "hii2");
-    return localStorage.getItem("todo");
-  };
+  window.addEventListener("resize", handleResize);
 
-  var task_list = getList();
+  function handleResize() {
+    var w = document.documentElement.clientWidth;
+    const body = document.getElementById("body");
 
-  for (let i = 0; i < task_list.length; i++) {
-    const row = document.createElement("row");
-    const col1 = document.createElement("div");
-    const col2 = document.createElement("div");
-    const col3 = document.createElement("div");
-    const col4 = document.createElement("div");
-    const col5 = document.createElement("div");
-
-    row.classList.add("row");
-    col1.classList.add("table-content");
-    col2.classList.add("table-content");
-    col2.classList.add("r");
-    col4.classList.add("table-content");
-    col3.classList.add("table-content");
-
-    col5.classList.add("table-content");
-
-    const editIcon = document.createElement("i");
-    editIcon.classList.add("fa-solid");
-    editIcon.classList.add("fa-pen-to-square");
-    editIcon.classList.add("Icon");
-    editIcon.classList.add("edit");
-
-    col4.append(editIcon);
-
-    const deleteIcon = document.createElement("i");
-    deleteIcon.classList.add("fa-solid");
-    deleteIcon.classList.add("fa-trash");
-    deleteIcon.classList.add("Icon");
-    deleteIcon.classList.add("delete");
-
-    col5.append(deleteIcon);
-
-    const col3div = document.createElement("div");
-
-    col1.innerText = i;
-    col2.innerText = task_list[i].task;
-    col3div.innerText = task_list[i].status;
-
-    col3.append(col3div);
-    col3div.classList.add("status-");
-
-    if (task_list[i] == "Pending") {
-      col3div.classList.add("pending");
-    } else if (task_list[i] == "Todo") {
-      col3div.classList.add("todo");
-    } else {
-      col3div.classList.add("complete");
+    if (w < 600) {
+      body.classList.remove("p");
+      body.classList.remove("p-14");
+      body.classList.add("p-1");
+      INPUT.classList.add("w-[95px]");
     }
 
-    col5.addEventListener("click", () => handleDelete(i));
-
-    row.append(col1);
-    row.append(col2);
-    row.append(col3);
-    row.append(col4);
-    row.append(col5);
-    table.append(row);
+    if (w > 600) {
+      body.classList.remove("p");
+      body.classList.remove("p-1");
+      body.classList.add("p-14");
+      INPUT.classList.remove("w-[95px]");
+    }
   }
 
-  const handleDelete = (ind) => {
-    console.log("function");
-    let temp = [];
-    for (let i = 0; i < task_list.length; i++) {
-      if (i != ind) temp.push(task_list[i]);
-    }
-    task_list = [];
-    task_list = temp;
-    console.log(task_list);
+  function getSavedValue(key, initialValue) {
+    const savedValue = JSON.parse(localStorage.getItem(key));
 
-    document.getElementById("Table").innerHTML = "";
+    if (savedValue) return savedValue;
+
+    if (initialValue instanceof Function) return initialValue();
+
+    return initialValue;
+  }
+
+  function saveValue(value) {
+    localStorage.setItem("todo-list", JSON.stringify(value));
+  }
+
+  const row_item_style = [
+    "flex",
+    "flex-grow",
+    "justify-between",
+    "items-center",
+  ];
+
+  const row_style = [
+    "flex",
+    "flex-row",
+    "border-grey-300",
+    "border-b-2",
+    "font-sans",
+    "text-grey-300",
+    "font-bold",
+    "h-[50px]",
+  ];
+
+  const icon_style = [
+    "fa-solid",
+    "cursor-pointer",
+    "text-[#0dcaf0]",
+    "hover:text-[rgb(128,128,128)]",
+    "text-2xl",
+    "active:text-[#0dcaf0]",
+    "active:border-[#0dcaf0]",
+  ];
+  function renderTasks(task_list) {
+    task_list.sort((a, b) => {
+      if (a["status"] > b["status"]) return -1;
+      return 1;
+    });
+    saveValue(task_list);
+    TABLE.innerHTML = "";
 
     for (let i = 0; i < task_list.length; i++) {
-      const row = document.createElement("row");
+      const row = document.createElement("div");
       const col1 = document.createElement("div");
       const col2 = document.createElement("div");
       const col3 = document.createElement("div");
       const col4 = document.createElement("div");
       const col5 = document.createElement("div");
 
-      row.classList.add("row");
-      col1.classList.add("table-content");
-      col2.classList.add("table-content");
-      col2.classList.add("r");
-      col4.classList.add("table-content");
-      col3.classList.add("table-content");
+      const col3_border_div = document.createElement("div");
+      col3_border_div.innerText = task_list[i]["status"];
+      col3.classList.add("min-w-[100px]");
 
-      col5.classList.add("table-content");
-
-      const editIcon = document.createElement("i");
-      editIcon.classList.add("fa-solid");
-      editIcon.classList.add("fa-pen-to-square");
-      editIcon.classList.add("Icon");
-      editIcon.classList.add("edit");
-
-      col4.append(editIcon);
-
-      const deleteIcon = document.createElement("i");
-      deleteIcon.classList.add("fa-solid");
-      deleteIcon.classList.add("fa-trash");
-      deleteIcon.classList.add("Icon");
-      deleteIcon.classList.add("delete");
-
-      col5.append(deleteIcon);
-
-      const col3div = document.createElement("div");
-
-      col1.innerText = i;
-      col2.innerText = task_list[i].task;
-      col3div.innerText = task_list[i].status;
-
-      col3.append(col3div);
-      col3div.classList.add("status-");
-
-      if (task_list[i] == "Pending") {
-        col3div.classList.add("pending");
-      } else if (task_list[i] == "Todo") {
-        col3div.classList.add("todo");
+      if (task_list[i].status == "Todo") {
+        col3_border_div.classList.add(
+          "border-2",
+          "px-[8px]",
+          "p-[2px]",
+          "border-[#b2b7bb]",
+          "rounded",
+          "text-gray-800",
+          "font-bold",
+          "text-[#b2b7bb]"
+        );
+      } else if (task_list[i].status == "Complete") {
+        col3_border_div.classList.add(
+          "border-2",
+          "px-[8px]",
+          "p-[2px]",
+          "border-green-500",
+          "text-green-500",
+          "rounded",
+          "font-bold"
+        );
       } else {
-        col3div.classList.add("complete");
+        col3_border_div.classList.add(
+          "bg-[#ffc006]",
+          "rounded",
+          "border-2",
+          "p-[2px]",
+          "border-[#ffc006]",
+          "font-bold"
+        );
       }
 
-      col5.addEventListener("click", () => handleDelete(i));
+      row.classList.add(...row_style);
+
+      const editIcon = document.createElement("i");
+      editIcon.classList.add("fa-pen-to-square", ...icon_style);
+
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add(
+        "fa-trash",
+        ...icon_style,
+        "text-[rgb(128,128,128)]",
+        "p-1",
+        "border-2",
+        "border-[rgb(128,128,128)]",
+        "rounded",
+        "text-[20px]",
+        "p-x-[15px]"
+      );
+
+      editIcon.addEventListener("click", () => handleEdit(i));
+      deleteIcon.addEventListener("click", () => handleDelete(i));
+
+      col1.innerText = i;
+      col2.innerText = task_list[i]["task"];
+      col3.append(col3_border_div);
+      col4.append(editIcon);
+      col5.append(deleteIcon);
+
+      col1.classList.add("items");
+      col2.classList.add("items", "r");
+      col3.classList.add("items");
+      col4.classList.add("items");
+      col5.classList.add("items");
 
       row.append(col1);
       row.append(col2);
       row.append(col3);
       row.append(col4);
       row.append(col5);
-      table.append(row);
+
+      TABLE.append(row);
     }
+  }
 
-    localStorage.setItem("todo", task_list);
-  };
+  function handleDelete(ind) {
+    task_list = task_list.filter((item, i) => ind != i);
+    document.getElementById("Table").innerHTML = "";
+    renderTasks(task_list);
+  }
 
-  form.addEventListener("submit", (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
-    const task = input.value;
-    console.log("submit form", task);
+    const task = INPUT.value;
     if (!task) {
       alert("Please Fill out the task");
       return;
@@ -165,60 +181,46 @@ window.addEventListener("load", () => {
       status: document.getElementById("status").value,
     });
 
-    document.getElementById("Table").innerHTML = "";
+    renderTasks(task_list);
+    INPUT.value = "";
+  }
 
-    for (let i = 0; i < task_list.length; i++) {
-      const row = document.createElement("row");
-      const col1 = document.createElement("div");
-      const col2 = document.createElement("div");
-      const col3 = document.createElement("div");
-      const col4 = document.createElement("div");
-      const col5 = document.createElement("div");
+  function handleChange(e, ind) {
+    task_list[ind]["status"] = e.target.value;
+    renderTasks(task_list);
+  }
 
-      row.classList.add("row");
-      col1.classList.add("table-content");
-      col2.classList.add("table-content");
-      col2.classList.add("r");
-      col4.classList.add("table-content");
-      col3.classList.add("table-content");
+  function handleEdit(ind) {
+    const item = TABLE.childNodes[ind];
+    item.childNodes[3].innerHTML = "";
 
-      col5.classList.add("table-content");
+    const editStatus = document.createElement("select");
 
-      const editIcon = document.createElement("i");
-      editIcon.classList.add("fa-solid");
-      editIcon.classList.add("fa-pen-to-square");
-      editIcon.classList.add("Icon");
+    editStatus.setAttribute("value", task_list[ind].status);
+    const opt0 = document.createElement("option");
+    opt0.innerText = "Select";
+    const opt1 = document.createElement("option");
+    opt1.innerText = "Todo";
+    opt1.setAttribute("value", "Todo");
+    const opt2 = document.createElement("option");
+    opt2.innerText = "Pending";
+    opt2.setAttribute("value", "Pending");
+    const opt3 = document.createElement("option");
+    opt3.innerText = "Complete";
+    opt3.setAttribute("value", "Complete");
 
-      col4.append(editIcon);
+    editStatus.append(opt0);
+    editStatus.append(opt1);
+    editStatus.append(opt2);
+    editStatus.append(opt3);
 
-      const deleteIcon = document.createElement("i");
-      deleteIcon.classList.add("fa-solid");
-      deleteIcon.classList.add("fa-trash");
-      deleteIcon.classList.add("Icon");
+    item.childNodes[3].append(editStatus);
 
-      col5.append(deleteIcon);
+    editStatus.addEventListener("change", (e) => handleChange(e, ind));
+  }
 
-      const col3div = document.createElement("div");
+  var task_list = getSavedValue("todo-list", []);
+  renderTasks(task_list);
 
-      col1.innerText = i;
-      col2.innerText = task_list[i].task;
-      col3div.innerText = task_list[i].status;
-
-      col3.append(col3div);
-      col3div.classList.add("status-");
-
-      col5.addEventListener("click", () => handleDelete(i));
-
-      row.append(col1);
-      row.append(col2);
-      row.append(col3);
-      row.append(col4);
-      row.append(col5);
-      table.append(row);
-    }
-
-    localStorage.setItem("todo", task_list);
-
-    document.getElementById("input").innerText = "";
-  });
+  FORM.addEventListener("submit", (e) => handleSubmit(e));
 });
