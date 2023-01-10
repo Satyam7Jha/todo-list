@@ -3,6 +3,7 @@ window.addEventListener("load", () => {
   const INPUT = document.getElementById("input");
   const BUTTON = document.getElementById("submit-button");
   const TABLE = document.getElementById("Table");
+  const VISIBLE_BTN = document.getElementById("add-task-visible");
 
   window.addEventListener("resize", handleResize);
 
@@ -25,6 +26,12 @@ window.addEventListener("load", () => {
     }
   }
 
+  function showAddTask() {
+    FORM.classList.remove("hidden");
+    VISIBLE_BTN.classList.add("hidden");
+  }
+
+  VISIBLE_BTN.addEventListener("click", showAddTask);
   function getSavedValue(key, initialValue) {
     const savedValue = JSON.parse(localStorage.getItem(key));
 
@@ -169,6 +176,9 @@ window.addEventListener("load", () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    FORM.classList.add("hidden");
+    VISIBLE_BTN.classList.remove("hidden");
 
     const task = INPUT.value;
     if (!task) {

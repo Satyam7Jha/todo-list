@@ -7,6 +7,10 @@
     <link href="/dist/output.css" rel="stylesheet" />
     <link href="/src/main.css" rel="stylesheet" />
     <link href="main.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=sans"
+    />
 
     <script
       src="https://kit.fontawesome.com/de01e3e79c.js"
@@ -32,7 +36,7 @@
         <section id="Add-Task" class="flex flex-row-reverse mb-6">
           <form
             id="input-task-form"
-            class="flex flex-wrap items-end justify-end space-y-2 space-x-2"
+            class="flex hidden flex-wrap items-end justify-end space-y-2 space-x-2"
           >
             <select
               class="h-[40px] cursor-pointer border-2 border-[#0dcaf0] rounded-md text-[#0dcaf0] font-bold"
@@ -58,6 +62,16 @@
               Submit
             </button>
           </form>
+          <div>
+          <div  class="flex  flex-wrap items-end justify-end space-y-2 space-x-2">
+            <div></div>
+            <button
+            id="add-task-visible"
+            class="border-2 h-[40px]  border-[#0dcaf0] text-[#0dcaf0] hover:bg-[#0dcaf0] hover:text-white font-bold py-2 px-4 rounded active:opacity-40"
+            type="submit"
+          >
+            Add Task
+          </button></div>
         </section>
 
         <div class="header border-b-4 border-black mb-4">
